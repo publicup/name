@@ -127,11 +127,13 @@ function applyLanguage() {
   document.querySelector('.hero-description').innerHTML = isEnglish ? englishLabels.heroDescription : '당신의 취향과 이야기를 담아<br class="mobile-break" /> 오래 기억될 이름을 찾아드릴게요.';
   document.querySelector('.orbit-core span').textContent = isEnglish ? 'Name' : '이름';
   document.querySelector('.panel-heading h2').textContent = isEnglish ? englishLabels.question : '무엇의 이름인가요?';
+  document.querySelector('.category-grid').setAttribute('aria-label', isEnglish ? 'Name category' : '이름 카테고리');
   document.querySelectorAll('.category-button').forEach((button, index) => {
     button.querySelector('span:not(.category-icon)').textContent = isEnglish ? englishLabels.categories[index][0] : ['브랜드', '반려동물', '아이 이름'][index];
     button.querySelector('small').textContent = isEnglish ? englishLabels.categories[index][1] : ['가게 · 서비스', '강아지 · 고양이', '사주 · 출생월'][index];
   });
   document.querySelector('#industry-select .expected-label').textContent = isEnglish ? englishLabels.industry : '브랜드 업종';
+  document.querySelector('#brand-industry').setAttribute('aria-label', isEnglish ? 'Select brand industry' : '브랜드 업종 선택');
   document.querySelector('#industry-select .saju-note').textContent = isEnglish ? englishLabels.industryHint : '선택한 업종과 이름의 분위기를 함께 반영해요.';
   const industryOptions = isEnglish ? ['Cafe', 'Restaurant', 'Beauty & fashion', 'Technology & service', 'Shopping & retail', 'Education & classes', 'Health & wellness', 'Crafts & studio'] : ['카페', '음식점', '뷰티·패션', '기술·서비스', '쇼핑·소매', '교육·클래스', '건강·웰니스', '공방·스튜디오'];
   document.querySelectorAll('#brand-industry option').forEach((option, index) => { option.textContent = industryOptions[index]; });
@@ -139,6 +141,11 @@ function applyLanguage() {
   document.querySelector('#saju-fields .saju-description').textContent = isEnglish ? englishLabels.sajuDescription : '부모님의 생년월일시와 아이의 태어날 연·월을 참고해 이름의 오행 균형을 살펴볼게요.';
   document.querySelector('#saju-fields .saju-grid').querySelectorAll('.saju-person-label').forEach((label, index) => { label.textContent = isEnglish ? [englishLabels.mother, englishLabels.father][index] : ['엄마', '아빠'][index]; });
   document.querySelector('#child-month').previousElementSibling.textContent = isEnglish ? englishLabels.childMonth : '아이의 태어날 연·월';
+  ['mother-date', 'mother-time', 'father-date', 'father-time', 'child-month'].forEach((id, index) => {
+    const koreanLabels = ['엄마 생년월일', '엄마 태어난 시간', '아빠 생년월일', '아빠 태어난 시간', '아이의 태어날 연월'];
+    const englishInputLabels = ['Mother\'s birth date', 'Mother\'s birth time', 'Father\'s birth date', 'Father\'s birth time', 'Baby\'s expected year and month'];
+    document.querySelector(`#${id}`).setAttribute('aria-label', isEnglish ? englishInputLabels[index] : koreanLabels[index]);
+  });
   document.querySelector('.required-name-fields .expected-label').childNodes[0].textContent = isEnglish ? `${englishLabels.firstCharacter} ` : '이름에 넣을 글자 ';
   document.querySelector('.required-name-fields .expected-label span').textContent = isEnglish ? englishLabels.optional : '선택';
   document.querySelector('#first-name-character').placeholder = isEnglish ? englishLabels.first : '첫 글자';
@@ -148,14 +155,18 @@ function applyLanguage() {
   document.querySelector('#pet-fields h3').textContent = isEnglish ? englishLabels.petTitle : '태어난 계절을 담아볼게요';
   document.querySelector('#pet-fields .saju-description').textContent = isEnglish ? englishLabels.petDescription : '반려동물이 태어난 연·월을 참고해 계절감이 어울리는 이름을 찾아볼게요.';
   document.querySelector('#pet-month').previousElementSibling.textContent = isEnglish ? englishLabels.petMonth : '반려동물이 태어난 연·월';
+  document.querySelector('#pet-month').setAttribute('aria-label', isEnglish ? 'Pet\'s birth year and month' : '반려동물이 태어난 연월');
   document.querySelector('#pet-fields .saju-note').textContent = isEnglish ? englishLabels.petNote : '※ 출생 월은 이름을 고르는 참고 자료로만 활용해요.';
   document.querySelector('.block-title h2').textContent = isEnglish ? englishLabels.mood : '어떤 결을 원하나요?';
+  document.querySelector('.tone-list').setAttribute('aria-label', isEnglish ? 'Name mood' : '이름 분위기');
   document.querySelectorAll('.tone-chip').forEach((button, index) => { button.childNodes[1].textContent = isEnglish ? englishLabels.tones[index] : ['따뜻한', '맑고 담백한', '선명한', '발랄한'][index]; });
   document.querySelector('#keyword').previousElementSibling.childNodes[0].textContent = isEnglish ? `${englishLabels.keyword} ` : '담고 싶은 단어 ';
   document.querySelector('#keyword').previousElementSibling.querySelector('span').textContent = isEnglish ? englishLabels.optional : '선택';
   document.querySelector('#keyword').placeholder = isEnglish ? englishLabels.keywordPlaceholder : '예: 숲, 빛, 느린, 바다';
+  document.querySelector('#keyword').setAttribute('aria-label', isEnglish ? englishLabels.keyword : '담고 싶은 단어');
   document.querySelector('.length-block .field-label').childNodes[0].textContent = isEnglish ? `${englishLabels.length} ` : '이름 길이 ';
   document.querySelectorAll('.range-labels span').forEach((label, index) => { label.textContent = isEnglish ? englishLabels.lengths[[0, 1, 2][index]] : ['짧게', '상관없어요', '길게'][index]; });
+  document.querySelector('#length-range').setAttribute('aria-label', isEnglish ? englishLabels.length : '이름 길이');
   document.querySelector('#generate-button span').textContent = isEnglish ? englishLabels.find : '이름 찾기';
   document.querySelector('.results-topline h2').textContent = isEnglish ? englishLabels.results : '당신을 위한 이름';
   document.querySelector('#refresh-button').setAttribute('aria-label', isEnglish ? englishLabels.refresh : '새 추천 받기');
