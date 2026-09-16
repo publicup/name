@@ -166,6 +166,7 @@ function applyLanguage() {
   document.querySelector('#keyword').placeholder = isEnglish ? englishLabels.keywordPlaceholder : '예: 숲, 빛, 느린, 바다';
   document.querySelector('#keyword').setAttribute('aria-label', isEnglish ? englishLabels.keyword : '담고 싶은 단어');
   document.querySelector('.length-block .field-label').childNodes[0].textContent = isEnglish ? `${englishLabels.length} ` : '이름 길이 ';
+  document.querySelector('#length-value').textContent = isEnglish ? ['No preference', 'Short name', 'Long name'][document.querySelector('#length-range').value] : ['상관없어요', '짧은 이름', '긴 이름'][document.querySelector('#length-range').value];
   document.querySelectorAll('.range-labels span').forEach((label, index) => { label.textContent = isEnglish ? englishLabels.lengths[[0, 1, 2][index]] : ['짧게', '상관없어요', '길게'][index]; });
   document.querySelector('#length-range').setAttribute('aria-label', isEnglish ? englishLabels.length : '이름 길이');
   document.querySelector('#generate-button span').textContent = isEnglish ? englishLabels.find : '이름 찾기';
