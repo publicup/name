@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Gowun+Batang:wght@400;700&display=swap');
 
-:root { --ink:#1d2924; --muted:#7e8982; --cream:#f8f5ef; --paper:#fffdfa; --line:#e8e5dc; --moss:#6f8066; --moss-dark:#3f5948; --coral:#e58f71; --yellow:#f4cf79; --blue:#a6c4c8; --lavender:#beb6d0; }
+:root { --ink:#1d2924; --muted:#7e8982; --cream:#e8eee8; --paper:#fffdfa; --line:#e8e5dc; --moss:#6f8066; --moss-dark:#3f5948; --coral:#e58f71; --yellow:#f4cf79; --blue:#a6c4c8; --lavender:#beb6d0; }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { margin:0; color:var(--ink); background:var(--cream); font-family:'DM Sans', sans-serif; }
