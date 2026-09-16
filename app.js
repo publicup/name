@@ -103,6 +103,45 @@ function updateSavedCount() {
   localStorage.setItem('nameforest-saved', JSON.stringify(savedNames));
 }
 
+function exportSavedNames() {
+  if (!savedNames.length) {
+    showToast('먼저 마음에 드는 이름을 저장해주세요.');
+    return;
+  }
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  const scale = 2;
+  const width = 720;
+  const rowHeight = 92;
+  const height = 168 + savedNames.length * rowHeight;
+  canvas.width = width * scale;
+  canvas.height = height * scale;
+  context.scale(scale, scale);
+  context.fillStyle = '#e8eee8';
+  context.fillRect(0, 0, width, height);
+  context.fillStyle = '#3f5948';
+  context.font = '700 13px DM Sans, sans-serif';
+  context.fillText('NAMEFOREST', 58, 55);
+  context.fillStyle = '#1d2924';
+  context.font = '400 34px Gowun Batang, serif';
+  context.fillText('저장해둔 이름', 58, 104);
+  savedNames.forEach((name, index) => {
+    const top = 142 + index * rowHeight;
+    context.fillStyle = '#fffdfa';
+    context.fillRect(48, top, width - 96, 66);
+    context.fillStyle = '#e58f71';
+    context.fillRect(48, top, 5, 66);
+    context.fillStyle = '#1d2924';
+    context.font = '400 24px Gowun Batang, serif';
+    context.fillText(name, 76, top + 41);
+  });
+  const link = document.createElement('a');
+  link.download = `nameforest-saved-${new Date().toISOString().slice(0, 10)}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+  showToast('저장한 이름을 이미지로 만들었어요.');
+}
+
 function bindResultActions() {
   document.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {
     const name = button.dataset.copy;
@@ -141,5 +180,6 @@ document.querySelector('#length-range').addEventListener('input', event => {
   renderResults();
 });
 document.querySelector('#saved-toggle').addEventListener('click', () => showToast(savedNames.length ? `저장한 이름 ${savedNames.length}개가 있어요.` : '아직 저장한 이름이 없어요.'));
+document.querySelector('#export-saved').addEventListener('click', exportSavedNames);
 
 renderResults();
