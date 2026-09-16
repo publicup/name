@@ -19,11 +19,64 @@ const data = {
   }
 };
 
+const brandIndustries = {
+  cafe: {
+    warm: [['온점', '따뜻한 한 잔과 이야기가 머무는 카페'], ['다정다방', '다정한 하루를 건네는 공간'], ['모락커피', '김이 모락모락 피어나는 순간'], ['포근잔', '편안한 휴식을 담은 한 잔']],
+    clear: [['여백커피', '비워낸 공간에서 또렷해지는 맛'], ['담담', '담백하고 오래 남는 카페'], ['맑은잔', '깨끗한 재료와 산뜻한 감각'], ['한점', '작지만 분명한 취향을 담은 곳']],
+    bold: [['파동커피', '새로운 맛의 흐름을 만드는 카페'], ['선명', '취향이 뚜렷한 한 잔'], ['원두결', '깊은 인상을 남기는 커피'], ['카페온', '하루의 중심을 밝히는 공간']],
+    playful: [['콩콩커피', '가볍고 즐거운 에너지가 있는 카페'], ['모락모락', '기분 좋은 향이 피어나는 곳'], ['오후네시', '잠깐의 설렘을 담은 카페'], ['두두잔', '리듬감 있게 기억되는 한 잔']]
+  },
+  restaurant: {
+    warm: [['다정식탁', '정성스러운 한 끼를 나누는 식당'], ['온담', '따뜻한 이야기가 오가는 밥상'], ['소담찬', '소박하고 풍성한 맛을 담은 곳'], ['마실', '편안하게 들러 쉬어가는 식당']],
+    clear: [['담백', '재료의 맛을 선명하게 전하는 식당'], ['소반', '정갈한 한 상을 담은 이름'], ['한결식당', '한결같은 맛과 마음'], ['맑은찬', '깨끗하고 산뜻한 음식']],
+    bold: [['불꽃식탁', '강렬한 맛의 기억을 남기는 곳'], ['결집키친', '새로운 맛이 모이는 주방'], ['큰입', '대담하고 풍성한 한 끼'], ['식탁파동', '익숙함을 깨우는 새로운 맛']],
+    playful: [['냠냠상회', '맛있는 즐거움이 가득한 식당'], ['두두키친', '통통 튀는 메뉴가 있는 곳'], ['한입만', '자꾸 생각나는 귀여운 맛'], ['말랑식탁', '부드럽고 유쾌한 한 끼']]
+  },
+  beauty: {
+    warm: [['윤슬살롱', '햇빛처럼 은은하게 빛나는 아름다움'], ['다정결', '다정한 손길로 가꾸는 시간'], ['온결', '편안한 나를 만나는 뷰티 공간'], ['포근살롱', '긴장을 내려놓는 부드러운 케어']],
+    clear: [['맑음', '본연의 아름다움을 깨우는 이름'], ['결살롱', '건강한 결을 가꾸는 공간'], ['여백뷰티', '덜어낼수록 선명해지는 매력'], ['담담스튜디오', '꾸밈없이 오래 남는 아름다움']],
+    bold: [['선명뷰티', '나만의 색을 분명하게 표현하는 곳'], ['결정', '새로운 모습으로 나아가는 순간'], ['빛결', '시선을 사로잡는 빛과 결'], ['대담살롱', '나다움을 힘 있게 드러내는 공간']],
+    playful: [['반짝살롱', '기분까지 환해지는 뷰티 시간'], ['살랑뷰티', '가볍고 산뜻한 변화를 담은 곳'], ['콩콩네일', '손끝에 통통 튀는 즐거움'], ['초롱스튜디오', '작은 빛처럼 반짝이는 매력']]
+  },
+  service: {
+    warm: [['이음', '사람과 마음을 자연스럽게 연결하는 서비스'], ['다온랩', '좋은 경험이 모두에게 다 오는 곳'], ['온유어스', '부드럽고 편안한 도움을 전하는 브랜드'], ['곁', '필요한 순간에 오래 함께하는 서비스']],
+    clear: [['기준', '복잡함을 덜고 본질을 선명하게 전하는 서비스'], ['담담스튜디오', '차분하고 정확한 경험을 만드는 곳'], ['한결', '변함없이 믿을 수 있는 서비스'], ['여백랩', '더 나은 선택을 위한 공간']],
+    bold: [['점프업', '새로운 가능성을 힘 있게 여는 서비스'], ['파동랩', '변화를 만들어내는 기술과 아이디어'], ['선명스튜디오', '문제를 뚜렷하게 해결하는 브랜드'], ['단단', '오래 믿고 맡길 수 있는 서비스']],
+    playful: [['두두랩', '일상을 더 재미있게 바꾸는 서비스'], ['톡톡', '가볍고 빠르게 닿는 아이디어'], ['모락랩', '작은 영감이 자라나는 브랜드'], ['콩콩스튜디오', '즐거운 변화를 차곡차곡 만드는 곳']]
+  },
+  retail: {
+    warm: [['다정상회', '좋은 물건과 마음을 함께 건네는 가게'], ['온담마켓', '따뜻한 취향을 발견하는 쇼핑 공간'], ['소담상점', '작지만 정성스러운 물건을 담은 곳'], ['곁상점', '일상 가까이 오래 머무는 브랜드']],
+    clear: [['여백마켓', '덜어낸 취향을 선명하게 보여주는 가게'], ['담백상점', '꼭 필요한 물건을 고르는 공간'], ['결', '좋은 소재와 감각을 담은 셀렉트숍'], ['한점마켓', '하나의 기준으로 고른 물건들']],
+    bold: [['픽온', '취향을 힘 있게 제안하는 스토어'], ['선택의결', '분명한 취향이 모이는 쇼핑 공간'], ['파동마켓', '새로운 라이프스타일을 여는 가게'], ['대담상점', '남다른 물건을 자신 있게 고르는 곳']],
+    playful: [['콩콩마켓', '발견하는 재미가 가득한 쇼핑 공간'], ['두두상점', '기분 좋은 물건이 톡톡 튀는 가게'], ['모락스토어', '작은 설렘이 피어나는 곳'], ['알록마켓', '일상을 알록달록 채우는 브랜드']]
+  },
+  education: {
+    warm: [['다온배움', '배움의 기쁨이 모두에게 다 오는 곳'], ['온마음클래스', '아이와 사람을 따뜻하게 성장시키는 수업'], ['곁스쿨', '배움의 길을 오래 함께 걷는 공간'], ['다정공부방', '편안한 마음으로 시작하는 배움']],
+    clear: [['한결스쿨', '차분하게 쌓아가는 배움의 시간'], ['여백클래스', '스스로 생각하는 힘을 키우는 수업'], ['바른결', '단단하고 반듯한 성장을 돕는 곳'], ['맑은배움', '핵심을 선명하게 이해하는 교육']],
+    bold: [['점프클래스', '가능성을 힘 있게 펼치는 배움'], ['큰숲스쿨', '넓은 시야와 큰 꿈을 키우는 곳'], ['파동교육', '새로운 생각을 깨우는 수업'], ['선명아카데미', '목표를 뚜렷하게 향하는 교육']],
+    playful: [['콩콩스쿨', '재미있게 배우며 한 걸음씩 자라는 곳'], ['톡톡클래스', '호기심과 질문이 톡톡 피어나는 수업'], ['두두배움', '리듬감 있게 익히는 즐거운 공부'], ['초롱교실', '작은 발견이 반짝이는 배움']]
+  },
+  wellness: {
+    warm: [['숨결', '몸과 마음이 편안히 쉬어가는 공간'], ['온쉼', '따뜻한 회복의 시간을 건네는 곳'], ['다정요가', '나를 다정하게 돌보는 움직임'], ['곁테라피', '필요한 순간 곁에서 함께하는 케어']],
+    clear: [['맑은숨', '호흡과 몸의 균형을 되찾는 공간'], ['여백웰니스', '비워내며 본연의 나를 만나는 시간'], ['한결바디', '꾸준하고 건강한 변화를 돕는 곳'], ['담담테라피', '차분하게 나를 돌보는 케어']],
+    bold: [['리셋바디', '새로운 나를 시작하는 웰니스 공간'], ['파동요가', '몸의 흐름을 깨우는 움직임'], ['단단케어', '내면과 몸을 함께 단단하게 만드는 곳'], ['점프웰니스', '활력 있는 일상으로 도약하는 케어']],
+    playful: [['살랑요가', '가볍고 즐겁게 움직이는 시간'], ['콩콩바디', '몸과 기분이 함께 튀어 오르는 공간'], ['두두테라피', '작은 리듬으로 시작하는 회복'], ['말랑쉼', '긴장을 말랑하게 풀어주는 곳']]
+  },
+  studio: {
+    warm: [['온작업실', '손길과 이야기가 따뜻하게 머무는 스튜디오'], ['다정공방', '정성스러운 창작을 함께 나누는 곳'], ['곁스튜디오', '좋아하는 일을 오래 이어가는 공간'], ['소담창작소', '작고 소중한 결과물을 만드는 곳']],
+    clear: [['여백스튜디오', '본질에 집중한 창작을 담는 공간'], ['결작업실', '소재와 아이디어의 결을 살리는 곳'], ['담담공방', '차분하게 좋은 것을 만드는 시간'], ['맑은창작소', '깨끗한 감각으로 표현하는 스튜디오']],
+    bold: [['파동스튜디오', '새로운 영감을 세상에 보내는 창작소'], ['대담공방', '나다운 작품을 힘 있게 만드는 곳'], ['선명작업실', '분명한 시선으로 완성하는 창작'], ['점화스튜디오', '아이디어에 불을 붙이는 공간']],
+    playful: [['콩콩공방', '만들고 발견하는 즐거움이 가득한 곳'], ['두두스튜디오', '리듬감 있는 창작이 시작되는 공간'], ['알록작업실', '색과 상상이 자유롭게 피어나는 곳'], ['모락창작소', '작은 아이디어가 자라나는 스튜디오']]
+  }
+};
+
 const categoryLabels = { brand: '브랜드', pet: '반려동물', child: '아이' };
+const industryLabels = { cafe: '카페', restaurant: '음식점', beauty: '뷰티·패션', service: '기술·서비스', retail: '쇼핑·소매', education: '교육·클래스', wellness: '건강·웰니스', studio: '공방·스튜디오' };
 const toneLabels = { warm: '따뜻한', clear: '맑고 담백한', bold: '선명한', playful: '발랄한' };
 const elementLabels = { 목: '나무', 화: '불', 토: '흙', 금: '금', 수: '물' };
 let category = 'brand';
 let tone = 'warm';
+let industry = 'cafe';
 let savedNames = JSON.parse(localStorage.getItem('nameforest-saved') || '[]');
 
 const resultList = document.querySelector('#result-list');
@@ -33,7 +86,7 @@ const toast = document.querySelector('#toast');
 
 function getNames() {
   const keyword = document.querySelector('#keyword').value.trim();
-  let names = [...data[category][tone]];
+  let names = category === 'brand' ? [...brandIndustries[industry][tone]] : [...data[category][tone]];
   if (category === 'child') {
     const saju = getSajuProfile();
     names = names.map(([name, meaning]) => [name, `${meaning} · ${elementLabels[saju.balanced]} 기운을 보완하는 이름`]);
@@ -81,7 +134,8 @@ function getSajuProfile() {
 
 function renderResults() {
   const names = getNames();
-  resultIntro.textContent = `${toneLabels[tone]} 결의 ${categoryLabels[category]} 이름을 골라봤어요.`;
+  const categoryDescription = category === 'brand' ? `${industryLabels[industry]} ${categoryLabels[category]}` : categoryLabels[category];
+  resultIntro.textContent = `${toneLabels[tone]} 결의 ${categoryDescription} 이름을 골라봤어요.`;
   resultList.innerHTML = names.map(([name, meaning]) => `
     <article class="result-card">
       <div><h3 class="result-name">${name}</h3><p class="result-meaning">${meaning}</p></div>
@@ -163,6 +217,7 @@ document.querySelectorAll('.category-button').forEach(button => button.addEventL
   document.querySelectorAll('.category-button').forEach(item => item.classList.toggle('active', item === button));
   document.querySelector('#saju-fields').hidden = category !== 'child';
   document.querySelector('#pet-fields').hidden = category !== 'pet';
+  document.querySelector('#industry-select').hidden = category !== 'brand';
   renderResults();
 }));
 document.querySelectorAll('.tone-chip').forEach(button => button.addEventListener('click', () => {
@@ -177,6 +232,10 @@ document.querySelectorAll('#saju-fields input, #pet-fields input').forEach(input
 document.querySelector('#length-range').addEventListener('input', event => {
   const values = ['상관없어요', '짧은 이름', '긴 이름'];
   document.querySelector('#length-value').textContent = values[event.target.value];
+  renderResults();
+});
+document.querySelector('#brand-industry').addEventListener('change', event => {
+  industry = event.target.value;
   renderResults();
 });
 document.querySelector('#saved-toggle').addEventListener('click', () => showToast(savedNames.length ? `저장한 이름 ${savedNames.length}개가 있어요.` : '아직 저장한 이름이 없어요.'));
