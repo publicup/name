@@ -80,7 +80,7 @@ const elementLabels = { 목: '나무', 화: '불', 토: '흙', 금: '금', 수: 
 let category = 'brand';
 let tone = 'warm';
 let industry = 'cafe';
-let language = 'ko';
+let language = localStorage.getItem('nameforest-language') || 'ko';
 let savedNames = JSON.parse(localStorage.getItem('nameforest-saved') || '[]');
 
 const resultList = document.querySelector('#result-list');
@@ -121,6 +121,7 @@ function applyLanguage() {
   document.title = isEnglish ? 'Nameforest | Find a name that feels like you' : '네임포레스트 | 이름을 찾는 작은 숲';
   languageToggle.textContent = isEnglish ? '한국어' : 'English';
   languageToggle.setAttribute('aria-label', isEnglish ? '한국어로 보기' : '영어로 보기');
+  document.querySelector('.brand').setAttribute('aria-label', isEnglish ? 'Nameforest home' : '네임포레스트 홈');
   document.querySelector('.header-note').lastChild.textContent = isEnglish ? ` ${englishLabels.headerNote}` : ' 오늘의 이름을 탐색 중';
   document.querySelector('.workspace').setAttribute('aria-label', isEnglish ? englishLabels.workspaceLabel : '이름 추천 설정');
   document.querySelector('.hero-copy h1').innerHTML = isEnglish ? englishLabels.heroTitle : '좋은 이름은<br /><em>오래 머물러요.</em>';
@@ -348,7 +349,8 @@ document.querySelector('#export-saved').addEventListener('click', exportSavedNam
 document.querySelector('#reset-saved').addEventListener('click', resetSavedNames);
 languageToggle.addEventListener('click', () => {
   language = language === 'ko' ? 'en' : 'ko';
+  localStorage.setItem('nameforest-language', language);
   applyLanguage();
 });
 
-renderResults();
+applyLanguage();
