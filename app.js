@@ -71,18 +71,101 @@ const brandIndustries = {
 };
 
 const categoryLabels = { brand: '브랜드', pet: '반려동물', child: '아이' };
+const englishCategoryLabels = { brand: 'brand', pet: 'pet', child: 'baby' };
 const industryLabels = { cafe: '카페', restaurant: '음식점', beauty: '뷰티·패션', service: '기술·서비스', retail: '쇼핑·소매', education: '교육·클래스', wellness: '건강·웰니스', studio: '공방·스튜디오' };
+const englishIndustryLabels = { cafe: 'cafe', restaurant: 'restaurant', beauty: 'beauty & fashion', service: 'technology & service', retail: 'shopping & retail', education: 'education & classes', wellness: 'health & wellness', studio: 'crafts & studio' };
 const toneLabels = { warm: '따뜻한', clear: '맑고 담백한', bold: '선명한', playful: '발랄한' };
+const englishToneLabels = { warm: 'warm', clear: 'clear and simple', bold: 'distinctive', playful: 'playful' };
 const elementLabels = { 목: '나무', 화: '불', 토: '흙', 금: '금', 수: '물' };
 let category = 'brand';
 let tone = 'warm';
 let industry = 'cafe';
+let language = 'ko';
 let savedNames = JSON.parse(localStorage.getItem('nameforest-saved') || '[]');
 
 const resultList = document.querySelector('#result-list');
 const resultIntro = document.querySelector('#result-intro');
 const savedCount = document.querySelector('#saved-count');
 const toast = document.querySelector('#toast');
+const languageToggle = document.querySelector('#language-toggle');
+
+const englishLabels = {
+  headerNote: 'Exploring today\'s names',
+  heroTitle: 'A good name<br /><em>stays with you.</em>',
+  heroDescription: 'We\'ll find a name that holds<br class="mobile-break" /> your taste and story.',
+  workspaceLabel: 'Name recommendation settings',
+  question: 'What are you naming?',
+  categories: [['Brand', 'shop · service'], ['Pet', 'dog · cat'], ['Baby name', 'birth · saju']],
+  industry: 'Brand industry',
+  industryHint: 'Recommendations reflect both your industry and preferred mood.',
+  sajuTitle: 'The season and family\'s story',
+  sajuDescription: 'We\'ll consider the parents\' birth details and the baby\'s expected year and month.',
+  mother: 'Mother', father: 'Father', childMonth: 'Baby\'s expected year and month',
+  firstCharacter: 'Character to include', optional: 'optional', first: 'First', second: 'Second',
+  characterHint: 'Try placing a preferred character at the beginning or end.',
+  sajuNote: '※ Saju is only a reference for choosing a name.',
+  petTitle: 'A name inspired by their season', petDescription: 'We\'ll use your pet\'s birth month to find a name with a fitting seasonal feeling.',
+  petMonth: 'Pet\'s birth year and month', petNote: '※ Birth month is used only as a naming reference.',
+  mood: 'What feeling do you want?', tones: ['Warm', 'Clear & simple', 'Distinctive', 'Playful'],
+  keyword: 'A word to include', keywordPlaceholder: 'e.g. forest, light, slow, sea',
+  length: 'Name length', lengths: ['Short', 'No preference', 'Long'],
+  find: 'Find names', results: 'Names for you', savedHint: 'Save the names that speak to you.',
+  saved: 'Saved names', image: '▧ Save image', reset: 'Reset', copy: 'Copy name', save: 'Save name', refresh: 'Get new recommendations',
+  emptySaved: 'You have no saved names yet.', resetEmpty: 'There are no saved names to reset.', resetConfirm: 'Reset all saved names?', resetDone: 'All saved names have been reset.',
+  exportDone: 'Your saved names are now an image.', noExport: 'Save a name first.', copied: 'was copied.', savedDone: 'was saved.', unsaved: 'was removed from saved names.', newNames: 'Found new names.'
+};
+
+function applyLanguage() {
+  const isEnglish = language === 'en';
+  document.documentElement.lang = language === 'en' ? 'en' : 'ko';
+  document.title = isEnglish ? 'Nameforest | Find a name that feels like you' : '네임포레스트 | 이름을 찾는 작은 숲';
+  languageToggle.textContent = isEnglish ? '한국어' : 'English';
+  languageToggle.setAttribute('aria-label', isEnglish ? '한국어로 보기' : '영어로 보기');
+  document.querySelector('.header-note').lastChild.textContent = isEnglish ? ` ${englishLabels.headerNote}` : ' 오늘의 이름을 탐색 중';
+  document.querySelector('.workspace').setAttribute('aria-label', isEnglish ? englishLabels.workspaceLabel : '이름 추천 설정');
+  document.querySelector('.hero-copy h1').innerHTML = isEnglish ? englishLabels.heroTitle : '좋은 이름은<br /><em>오래 머물러요.</em>';
+  document.querySelector('.hero-description').innerHTML = isEnglish ? englishLabels.heroDescription : '당신의 취향과 이야기를 담아<br class="mobile-break" /> 오래 기억될 이름을 찾아드릴게요.';
+  document.querySelector('.orbit-core span').textContent = isEnglish ? 'Name' : '이름';
+  document.querySelector('.panel-heading h2').textContent = isEnglish ? englishLabels.question : '무엇의 이름인가요?';
+  document.querySelectorAll('.category-button').forEach((button, index) => {
+    button.querySelector('span:not(.category-icon)').textContent = isEnglish ? englishLabels.categories[index][0] : ['브랜드', '반려동물', '아이 이름'][index];
+    button.querySelector('small').textContent = isEnglish ? englishLabels.categories[index][1] : ['가게 · 서비스', '강아지 · 고양이', '사주 · 출생월'][index];
+  });
+  document.querySelector('#industry-select .expected-label').textContent = isEnglish ? englishLabels.industry : '브랜드 업종';
+  document.querySelector('#industry-select .saju-note').textContent = isEnglish ? englishLabels.industryHint : '선택한 업종과 이름의 분위기를 함께 반영해요.';
+  const industryOptions = isEnglish ? ['Cafe', 'Restaurant', 'Beauty & fashion', 'Technology & service', 'Shopping & retail', 'Education & classes', 'Health & wellness', 'Crafts & studio'] : ['카페', '음식점', '뷰티·패션', '기술·서비스', '쇼핑·소매', '교육·클래스', '건강·웰니스', '공방·스튜디오'];
+  document.querySelectorAll('#brand-industry option').forEach((option, index) => { option.textContent = industryOptions[index]; });
+  document.querySelector('#saju-fields h3').textContent = isEnglish ? englishLabels.sajuTitle : '아이의 계절과 가족의 결';
+  document.querySelector('#saju-fields .saju-description').textContent = isEnglish ? englishLabels.sajuDescription : '부모님의 생년월일시와 아이의 태어날 연·월을 참고해 이름의 오행 균형을 살펴볼게요.';
+  document.querySelector('#saju-fields .saju-grid').querySelectorAll('.saju-person-label').forEach((label, index) => { label.textContent = isEnglish ? [englishLabels.mother, englishLabels.father][index] : ['엄마', '아빠'][index]; });
+  document.querySelector('#child-month').previousElementSibling.textContent = isEnglish ? englishLabels.childMonth : '아이의 태어날 연·월';
+  document.querySelector('.required-name-fields .expected-label').childNodes[0].textContent = isEnglish ? `${englishLabels.firstCharacter} ` : '이름에 넣을 글자 ';
+  document.querySelector('.required-name-fields .expected-label span').textContent = isEnglish ? englishLabels.optional : '선택';
+  document.querySelector('#first-name-character').placeholder = isEnglish ? englishLabels.first : '첫 글자';
+  document.querySelector('#second-name-character').placeholder = isEnglish ? englishLabels.second : '둘째 글자';
+  document.querySelector('.character-hint').textContent = isEnglish ? englishLabels.characterHint : '첫 글자 또는 둘째 글자 중 원하는 위치에 넣어보세요.';
+  document.querySelector('#saju-fields .saju-note').textContent = isEnglish ? englishLabels.sajuNote : '※ 사주는 이름을 고르는 참고 자료이며, 정확한 풀이를 대신하지 않아요.';
+  document.querySelector('#pet-fields h3').textContent = isEnglish ? englishLabels.petTitle : '태어난 계절을 담아볼게요';
+  document.querySelector('#pet-fields .saju-description').textContent = isEnglish ? englishLabels.petDescription : '반려동물이 태어난 연·월을 참고해 계절감이 어울리는 이름을 찾아볼게요.';
+  document.querySelector('#pet-month').previousElementSibling.textContent = isEnglish ? englishLabels.petMonth : '반려동물이 태어난 연·월';
+  document.querySelector('#pet-fields .saju-note').textContent = isEnglish ? englishLabels.petNote : '※ 출생 월은 이름을 고르는 참고 자료로만 활용해요.';
+  document.querySelector('.block-title h2').textContent = isEnglish ? englishLabels.mood : '어떤 결을 원하나요?';
+  document.querySelectorAll('.tone-chip').forEach((button, index) => { button.childNodes[1].textContent = isEnglish ? englishLabels.tones[index] : ['따뜻한', '맑고 담백한', '선명한', '발랄한'][index]; });
+  document.querySelector('#keyword').previousElementSibling.childNodes[0].textContent = isEnglish ? `${englishLabels.keyword} ` : '담고 싶은 단어 ';
+  document.querySelector('#keyword').previousElementSibling.querySelector('span').textContent = isEnglish ? englishLabels.optional : '선택';
+  document.querySelector('#keyword').placeholder = isEnglish ? englishLabels.keywordPlaceholder : '예: 숲, 빛, 느린, 바다';
+  document.querySelector('.length-block .field-label').childNodes[0].textContent = isEnglish ? `${englishLabels.length} ` : '이름 길이 ';
+  document.querySelectorAll('.range-labels span').forEach((label, index) => { label.textContent = isEnglish ? englishLabels.lengths[[0, 1, 2][index]] : ['짧게', '상관없어요', '길게'][index]; });
+  document.querySelector('#generate-button span').textContent = isEnglish ? englishLabels.find : '이름 찾기';
+  document.querySelector('.results-topline h2').textContent = isEnglish ? englishLabels.results : '당신을 위한 이름';
+  document.querySelector('#refresh-button').setAttribute('aria-label', isEnglish ? englishLabels.refresh : '새 추천 받기');
+  document.querySelector('#refresh-button').title = isEnglish ? englishLabels.refresh : '새 추천 받기';
+  document.querySelector('.results-footer > span').lastChild.textContent = isEnglish ? ` ${englishLabels.savedHint}` : ' 마음에 드는 이름은 저장해두세요.';
+  document.querySelector('#saved-toggle').childNodes[0].textContent = isEnglish ? `${englishLabels.saved} ` : '저장한 이름 ';
+  document.querySelector('#export-saved').textContent = isEnglish ? englishLabels.image : '▧ 이미지 저장';
+  document.querySelector('#reset-saved').textContent = isEnglish ? englishLabels.reset : '초기화';
+  renderResults();
+}
 
 function getNames() {
   const keyword = document.querySelector('#keyword').value.trim();
@@ -135,11 +218,11 @@ function getSajuProfile() {
 function renderResults() {
   const names = getNames();
   const categoryDescription = category === 'brand' ? `${industryLabels[industry]} ${categoryLabels[category]}` : categoryLabels[category];
-  resultIntro.textContent = `${toneLabels[tone]} 결의 ${categoryDescription} 이름을 골라봤어요.`;
+  resultIntro.textContent = language === 'en' ? `${englishToneLabels[tone]} ${category === 'brand' ? `${englishIndustryLabels[industry]} ${englishCategoryLabels[category]}` : englishCategoryLabels[category]} names picked for you.` : `${toneLabels[tone]} 결의 ${categoryDescription} 이름을 골라봤어요.`;
   resultList.innerHTML = names.map(([name, meaning]) => `
     <article class="result-card">
-      <div><h3 class="result-name">${name}</h3><p class="result-meaning">${meaning}</p></div>
-      <div class="result-actions"><button class="icon-button copy" data-copy="${name}" aria-label="${name} 복사" title="이름 복사">□</button><button class="icon-button ${savedNames.includes(name) ? 'saved' : ''}" data-save="${name}" aria-label="${name} 저장" title="이름 저장">♡</button></div>
+      <div><h3 class="result-name">${name}</h3><p class="result-meaning">${language === 'en' ? `A ${englishToneLabels[tone]} ${englishCategoryLabels[category]} name with a memorable feeling.` : meaning}</p></div>
+      <div class="result-actions"><button class="icon-button copy" data-copy="${name}" aria-label="${name} ${language === 'en' ? englishLabels.copy : '복사'}" title="${language === 'en' ? englishLabels.copy : '이름 복사'}">□</button><button class="icon-button ${savedNames.includes(name) ? 'saved' : ''}" data-save="${name}" aria-label="${name} ${language === 'en' ? englishLabels.save : '저장'}" title="${language === 'en' ? englishLabels.save : '이름 저장'}">♡</button></div>
     </article>`).join('');
   bindResultActions();
   updateSavedCount();
@@ -157,9 +240,20 @@ function updateSavedCount() {
   localStorage.setItem('nameforest-saved', JSON.stringify(savedNames));
 }
 
+function resetSavedNames() {
+  if (!savedNames.length) {
+    showToast(language === 'en' ? englishLabels.resetEmpty : '초기화할 저장한 이름이 없어요.');
+    return;
+  }
+  if (!window.confirm(language === 'en' ? englishLabels.resetConfirm : '저장한 이름을 모두 초기화할까요?')) return;
+  savedNames = [];
+  renderResults();
+  showToast(language === 'en' ? englishLabels.resetDone : '저장한 이름을 모두 초기화했어요.');
+}
+
 function exportSavedNames() {
   if (!savedNames.length) {
-    showToast('먼저 마음에 드는 이름을 저장해주세요.');
+    showToast(language === 'en' ? englishLabels.noExport : '먼저 마음에 드는 이름을 저장해주세요.');
     return;
   }
   const canvas = document.createElement('canvas');
@@ -178,7 +272,7 @@ function exportSavedNames() {
   context.fillText('NAMEFOREST', 58, 55);
   context.fillStyle = '#1d2924';
   context.font = '400 34px Gowun Batang, serif';
-  context.fillText('저장해둔 이름', 58, 104);
+  context.fillText(language === 'en' ? 'Saved names' : '저장해둔 이름', 58, 104);
   savedNames.forEach((name, index) => {
     const top = 142 + index * rowHeight;
     context.fillStyle = '#fffdfa';
@@ -193,14 +287,14 @@ function exportSavedNames() {
   link.download = `nameforest-saved-${new Date().toISOString().slice(0, 10)}.png`;
   link.href = canvas.toDataURL('image/png');
   link.click();
-  showToast('저장한 이름을 이미지로 만들었어요.');
+  showToast(language === 'en' ? englishLabels.exportDone : '저장한 이름을 이미지로 만들었어요.');
 }
 
 function bindResultActions() {
   document.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {
     const name = button.dataset.copy;
     try { await navigator.clipboard.writeText(name); } catch { /* clipboard unavailable */ }
-    showToast(`'${name}'을(를) 복사했어요.`);
+    showToast(language === 'en' ? `'${name}' ${englishLabels.copied}` : `'${name}'을(를) 복사했어요.`);
   }));
   document.querySelectorAll('[data-save]').forEach(button => button.addEventListener('click', () => {
     const name = button.dataset.save;
@@ -208,7 +302,7 @@ function bindResultActions() {
     button.classList.toggle('saved', savedNames.includes(name));
     button.textContent = savedNames.includes(name) ? '♥' : '♡';
     updateSavedCount();
-    showToast(savedNames.includes(name) ? `'${name}'을(를) 저장했어요.` : '저장에서 뺐어요.');
+    showToast(savedNames.includes(name) ? (language === 'en' ? `'${name}' ${englishLabels.savedDone}` : `'${name}'을(를) 저장했어요.`) : (language === 'en' ? englishLabels.unsaved : '저장에서 뺐어요.'));
   }));
 }
 
@@ -225,12 +319,12 @@ document.querySelectorAll('.tone-chip').forEach(button => button.addEventListene
   document.querySelectorAll('.tone-chip').forEach(item => item.classList.toggle('active', item === button));
   renderResults();
 }));
-document.querySelector('#generate-button').addEventListener('click', () => { renderResults(); showToast('새로운 이름을 찾았어요.'); });
+document.querySelector('#generate-button').addEventListener('click', () => { renderResults(); showToast(language === 'en' ? englishLabels.newNames : '새로운 이름을 찾았어요.'); });
 document.querySelector('#refresh-button').addEventListener('click', renderResults);
 document.querySelector('#keyword').addEventListener('input', renderResults);
 document.querySelectorAll('#saju-fields input, #pet-fields input').forEach(input => input.addEventListener('input', renderResults));
 document.querySelector('#length-range').addEventListener('input', event => {
-  const values = ['상관없어요', '짧은 이름', '긴 이름'];
+  const values = language === 'en' ? ['No preference', 'Short name', 'Long name'] : ['상관없어요', '짧은 이름', '긴 이름'];
   document.querySelector('#length-value').textContent = values[event.target.value];
   renderResults();
 });
@@ -238,7 +332,12 @@ document.querySelector('#brand-industry').addEventListener('change', event => {
   industry = event.target.value;
   renderResults();
 });
-document.querySelector('#saved-toggle').addEventListener('click', () => showToast(savedNames.length ? `저장한 이름 ${savedNames.length}개가 있어요.` : '아직 저장한 이름이 없어요.'));
+document.querySelector('#saved-toggle').addEventListener('click', () => showToast(savedNames.length ? (language === 'en' ? `${englishLabels.saved} ${savedNames.length}` : `저장한 이름 ${savedNames.length}개가 있어요.`) : (language === 'en' ? englishLabels.emptySaved : '아직 저장한 이름이 없어요.')));
 document.querySelector('#export-saved').addEventListener('click', exportSavedNames);
+document.querySelector('#reset-saved').addEventListener('click', resetSavedNames);
+languageToggle.addEventListener('click', () => {
+  language = language === 'ko' ? 'en' : 'ko';
+  applyLanguage();
+});
 
 renderResults();
