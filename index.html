@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f8f5ef" />
+  <title>네임포레스트 | 이름을 찾는 작은 숲</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="네임포레스트 홈">
+      <span class="brand-mark">N</span>
+      <span>name<span class="brand-accent">forest</span></span>
+    </a>
+    <div class="header-note"><span class="status-dot"></span> 오늘의 이름을 탐색 중</div>
+  </header>
+
+  <main id="top">
+    <section class="hero-section">
+      <div class="hero-copy">
+        <p class="eyebrow">FIND A NAME THAT FEELS LIKE YOU</p>
+        <h1>좋은 이름은<br /><em>오래 머물러요.</em></h1>
+        <p class="hero-description">당신의 취향과 이야기를 담아<br class="mobile-break" /> 오래 기억될 이름을 찾아드릴게요.</p>
+      </div>
+      <div class="hero-orbit" aria-hidden="true">
+        <div class="orbit-line orbit-one"></div>
+        <div class="orbit-line orbit-two"></div>
+        <div class="leaf leaf-one">✦</div>
+        <div class="leaf leaf-two">✧</div>
+        <div class="orbit-core"><span>이름</span><small>explore</small></div>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="이름 추천 설정">
+      <div class="controls-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="step-label">01 / 03</span>
+            <h2>무엇의 이름인가요?</h2>
+          </div>
+          <span class="heading-icon">⌁</span>
+        </div>
+        <div class="category-grid" role="group" aria-label="이름 카테고리">
+          <button class="category-button active" data-category="brand"><span class="category-icon">◒</span><span>브랜드</span><small>가게 · 서비스</small></button>
+          <button class="category-button" data-category="pet"><span class="category-icon">◌</span><span>반려동물</span><small>강아지 · 고양이</small></button>
+          <button class="category-button" data-category="child"><span class="category-icon">✳</span><span>아이 이름</span><small>사주 · 출생월</small></button>
+        </div>
+
+        <div class="saju-fields" id="saju-fields" hidden>
+          <div class="saju-heading"><div><span class="step-label">SPECIAL GUIDE</span><h3>아이의 계절과 가족의 결</h3></div><span class="saju-symbol">☼</span></div>
+          <p class="saju-description">부모님의 생년월일시와 아이의 태어날 연·월을 참고해 이름의 오행 균형을 살펴볼게요.</p>
+          <div class="saju-grid">
+            <div class="saju-person"><span class="saju-person-label">엄마</span><div class="date-time-row"><input id="mother-date" type="date" aria-label="엄마 생년월일" /><input id="mother-time" type="time" aria-label="엄마 태어난 시간" /></div></div>
+            <div class="saju-person"><span class="saju-person-label">아빠</span><div class="date-time-row"><input id="father-date" type="date" aria-label="아빠 생년월일" /><input id="father-time" type="time" aria-label="아빠 태어난 시간" /></div></div>
+          </div>
+          <label class="expected-label" for="child-month">아이의 태어날 연·월</label>
+          <input class="month-input" id="child-month" type="month" aria-label="아이의 태어날 연월" />
+          <div class="required-name-fields">
+            <label class="expected-label" for="first-name-character">이름에 넣을 글자 <span>선택</span></label>
+            <div class="character-inputs"><input id="first-name-character" type="text" maxlength="1" placeholder="첫 글자" aria-label="이름 첫 번째 글자" /><input id="second-name-character" type="text" maxlength="1" placeholder="둘째 글자" aria-label="이름 두 번째 글자" /></div>
+            <p class="character-hint">첫 글자 또는 둘째 글자 중 원하는 위치에 넣어보세요.</p>
+          </div>
+          <p class="saju-note">※ 사주는 이름을 고르는 참고 자료이며, 정확한 풀이를 대신하지 않아요.</p>
+        </div>
+
+        <div class="saju-fields pet-birth-fields" id="pet-fields" hidden>
+          <div class="saju-heading"><div><span class="step-label">PET PROFILE</span><h3>태어난 계절을 담아볼게요</h3></div><span class="saju-symbol">✦</span></div>
+          <p class="saju-description">반려동물이 태어난 연·월을 참고해 계절감이 어울리는 이름을 찾아볼게요.</p>
+          <label class="expected-label" for="pet-month">반려동물이 태어난 연·월</label>
+          <input class="month-input" id="pet-month" type="month" aria-label="반려동물이 태어난 연월" />
+          <p class="saju-note">※ 출생 월은 이름을 고르는 참고 자료로만 활용해요.</p>
+        </div>
+
+        <div class="control-block">
+          <div class="block-title"><span class="step-label">02 / 03</span><h2>어떤 결을 원하나요?</h2></div>
+          <div class="tone-list" role="group" aria-label="이름 분위기">
+            <button class="tone-chip active" data-tone="warm"><span class="tone-swatch warm-swatch"></span>따뜻한</button>
+            <button class="tone-chip" data-tone="clear"><span class="tone-swatch clear-swatch"></span>맑고 담백한</button>
+            <button class="tone-chip" data-tone="bold"><span class="tone-swatch bold-swatch"></span>선명한</button>
+            <button class="tone-chip" data-tone="playful"><span class="tone-swatch playful-swatch"></span>발랄한</button>
+          </div>
+        </div>
+
+        <div class="control-block compact-controls">
+          <label class="field-label" for="keyword">담고 싶은 단어 <span>선택</span></label>
+          <div class="input-wrap"><input id="keyword" type="text" placeholder="예: 숲, 빛, 느린, 바다" maxlength="20" /><span>⌕</span></div>
+        </div>
+        <div class="control-block length-block">
+          <div class="field-label">이름 길이 <span id="length-value">상관없어요</span></div>
+          <input id="length-range" type="range" min="0" max="2" value="0" aria-label="이름 길이" />
+          <div class="range-labels"><span>짧게</span><span>상관없어요</span><span>길게</span></div>
+        </div>
+        <button class="generate-button" id="generate-button"><span>이름 찾기</span><span class="button-arrow">↗</span></button>
+      </div>
+
+      <div class="results-panel">
+        <div class="results-topline"><div><span class="step-label">03 / 03</span><h2>당신을 위한 이름</h2></div><button class="refresh-button" id="refresh-button" aria-label="새 추천 받기" title="새 추천 받기">↻</button></div>
+        <p class="result-intro" id="result-intro">따뜻한 결의 이름을 골라봤어요.</p>
+        <div class="result-list" id="result-list"></div>
+        <div class="results-footer"><span><span class="sparkle">✦</span> 마음에 드는 이름은 저장해두세요.</span><button class="saved-toggle" id="saved-toggle">저장한 이름 <b id="saved-count">0</b>개</button></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">이름을 복사했어요.</div>
+  <script src="app.js"></script>
+</body>
+</html>
